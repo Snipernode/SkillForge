@@ -31,8 +31,9 @@ commands:
     description: Check your skill point balance
     usage: /skillpoints
   debate:
-    description: Maxes your progression stats (admin/dev tool)
-    usage: /debate
+    description: Debate mastery and ascension progression
+    usage: /debate [status|schools|start <school>]
+    permission: skillforge.debate
   reloadforge:
     description: Reload SkillForge config
     usage: /reloadforge

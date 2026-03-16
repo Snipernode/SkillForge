@@ -58,6 +58,7 @@ public class SkillForgePlugin extends JavaPlugin {
     private FastTravelSystem fastTravelSystem;
     private SkillGraphSystem skillGraphSystem;
     private SkillSanctumSystem skillSanctumSystem;
+    private DebateSystem debateSystem;
     private CrateRewardManager crateRewardManager;
     private CrateBlockSystem crateBlockSystem;
     private VoteRewardSystem voteRewardSystem;
@@ -138,6 +139,7 @@ public class SkillForgePlugin extends JavaPlugin {
         this.fastTravelSystem = new FastTravelSystem(this);
         this.skillGraphSystem = new SkillGraphSystem(this);
         this.skillSanctumSystem = new SkillSanctumSystem(this);
+        this.debateSystem = new DebateSystem(this);
         this.crateRewardManager = new CrateRewardManager(this, this.crateKeyLedger);
         this.crateBlockSystem = new CrateBlockSystem(this, this.crateKeyLedger);
         this.kdHudBridge = new KDHudBridge(this);
@@ -325,6 +327,10 @@ public class SkillForgePlugin extends JavaPlugin {
 
     public SkillSanctumSystem getSkillSanctumSystem() {
         return skillSanctumSystem;
+    }
+
+    public DebateSystem getDebateSystem() {
+        return debateSystem;
     }
 
     public void syncNexoAssets(boolean logWhenSkipped) {

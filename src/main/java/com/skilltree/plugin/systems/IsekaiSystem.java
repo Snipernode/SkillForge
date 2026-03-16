@@ -74,6 +74,11 @@ public class IsekaiSystem implements Listener {
         }
         player.sendMessage(ChatColor.GRAY + "Skill points earned: " + ChatColor.YELLOW + status.totalPurchased
                 + ChatColor.GRAY + "/" + ChatColor.YELLOW + status.requiredPurchased);
+        if (status.debateEnabled) {
+            player.sendMessage(ChatColor.GRAY + "Debate ascension: " + ChatColor.LIGHT_PURPLE + status.debateEquivalent
+                    + ChatColor.GRAY + "/" + ChatColor.LIGHT_PURPLE + status.requiredPurchased);
+        }
+        player.sendMessage(ChatColor.DARK_GRAY + "Reincarnation uses the stronger of your purchased-skill progression or debate ascension.");
     }
 
     public void showIsekaiInfo(Player player) {
@@ -687,10 +692,16 @@ public class IsekaiSystem implements Listener {
         if (requiredPurchased <= 0) {
             requiredPurchased = maxTotal * 2;
         }
+        boolean debateEnabled = plugin.getConfig().getBoolean("isekai.debate_progress_enabled", true)
+                && plugin.getDebateSystem() != null
+                && plugin.getDebateSystem().isEnabled();
+        int debateEquivalent = debateEnabled ? plugin.getDebateSystem().getReincarnationEquivalent(data) : 0;
+        int effectivePurchased = debateEnabled ? Math.max(data.getTotalSkillsPurchased(), debateEquivalent) : data.getTotalSkillsPurchased();
         boolean meetsMax = !requireCurrentMaxed || currentTotal >= maxTotal;
-        boolean meetsPurchased = data.getTotalSkillsPurchased() >= requiredPurchased;
+        boolean meetsPurchased = effectivePurchased >= requiredPurchased;
         boolean eligible = meetsMax && meetsPurchased;
-        return new EligibilityStatus(eligible, currentTotal, maxTotal, data.getTotalSkillsPurchased(), requiredPurchased, requireCurrentMaxed);
+        return new EligibilityStatus(eligible, currentTotal, maxTotal, data.getTotalSkillsPurchased(), requiredPurchased,
+                requireCurrentMaxed, debateEnabled, debateEquivalent, effectivePurchased);
     }
 
     private int getMaxTotalSkillLevels() {
@@ -735,14 +746,21 @@ public class IsekaiSystem implements Listener {
         private final int totalPurchased;
         private final int requiredPurchased;
         private final boolean requireCurrentMaxed;
+        private final boolean debateEnabled;
+        private final int debateEquivalent;
+        private final int effectivePurchased;
 
-        EligibilityStatus(boolean eligible, int currentTotal, int maxTotal, int totalPurchased, int requiredPurchased, boolean requireCurrentMaxed) {
+        EligibilityStatus(boolean eligible, int currentTotal, int maxTotal, int totalPurchased, int requiredPurchased,
+                          boolean requireCurrentMaxed, boolean debateEnabled, int debateEquivalent, int effectivePurchased) {
             this.eligible = eligible;
             this.currentTotal = currentTotal;
             this.maxTotal = maxTotal;
             this.totalPurchased = totalPurchased;
             this.requiredPurchased = requiredPurchased;
             this.requireCurrentMaxed = requireCurrentMaxed;
+            this.debateEnabled = debateEnabled;
+            this.debateEquivalent = debateEquivalent;
+            this.effectivePurchased = effectivePurchased;
         }
     }
 }

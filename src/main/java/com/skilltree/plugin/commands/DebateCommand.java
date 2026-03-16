@@ -1,45 +1,59 @@
 package com.skilltree.plugin.commands;
 
 import com.skilltree.plugin.SkillForgePlugin;
-import com.skilltree.plugin.data.PlayerData;
-import com.skilltree.plugin.systems.SkillTreeSystem;
+import com.skilltree.plugin.systems.DebateSystem;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class DebateCommand implements CommandExecutor {
-    
+
     private final SkillForgePlugin plugin;
-    
+
     public DebateCommand(SkillForgePlugin plugin) {
         this.plugin = plugin;
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
             sender.sendMessage("§cThis command can only be used by players!");
             return true;
         }
-        
-        if (!player.isOp()) {
-            player.sendMessage("§cYou must be an OP to use this command!");
+
+        DebateSystem debateSystem = plugin.getDebateSystem();
+        if (debateSystem == null || !debateSystem.isEnabled()) {
+            player.sendMessage(ChatColor.RED + "Debate is unavailable right now.");
             return true;
         }
-        
-        PlayerData data = plugin.getPlayerDataManager().getPlayerData(player);
-        
-        data.setEvershards(999999);
-        data.setSkillPoints(999999);
-        
-        for (SkillTreeSystem.SkillNode node : plugin.getSkillTreeSystem().getAllSkillNodes().values()) {
-            data.setSkillLevel(node.getId(), node.getMaxLevel());
+
+        if (!player.isOp() && !player.hasPermission("skillforge.admin") && !player.hasPermission("skillforge.debate")) {
+            player.sendMessage(ChatColor.RED + "Debate is currently restricted to admins.");
+            return true;
         }
-        
-        player.sendMessage("§6§l[SkillForge] §aGod mode activated! All stats maxed!");
-        player.sendMessage("§e§l[Note] §7Innate skills are NOT affected by this command - assign them with /roll!");
-        
+
+        if (args.length == 0 || args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("status")) {
+            debateSystem.showStatus(player);
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("start") || args[0].equalsIgnoreCase("begin") || args[0].equalsIgnoreCase("challenge")) {
+            if (args.length < 2) {
+                player.sendMessage(ChatColor.YELLOW + "Usage: /debate start <" + String.join("|", debateSystem.schools()) + ">");
+                return true;
+            }
+            debateSystem.startDebate(player, args[1]);
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("schools")) {
+            player.sendMessage(ChatColor.GOLD + "Debate schools: " + ChatColor.YELLOW + String.join(", ", debateSystem.schools()));
+            return true;
+        }
+
+        player.sendMessage(ChatColor.YELLOW + "Usage: /debate [status|schools|start <school>]");
         return true;
     }
 }

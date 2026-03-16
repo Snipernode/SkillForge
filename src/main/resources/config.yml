@@ -176,12 +176,20 @@ isekai:
   require_current_maxed: true
   # -1 means auto-calc: (max total skill levels) * 2
   required_total_skill_points: -1
+  debate_progress_enabled: true
   offline_return_days: 14
   max_abilities: 7
   growth:
     skill-levels-per-tier: 250
     max-level: 15
     gain-cooldown-ms: 60000
+
+debate:
+  enabled: true
+  cooldown_seconds: 45
+  skillpoint_every_wins: 5
+  skillpoint_reward: 1
+  projection_duration_ticks: 200
 
 # Troll command effects (opme)
 troll:

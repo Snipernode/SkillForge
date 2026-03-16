@@ -68,6 +68,12 @@ public class PlayerData {
     private long playtimeMillis;
     private long lastLoginTime;
     private String lastKnownName;
+    private int debateRating;
+    private int debateWins;
+    private int debateLosses;
+    private int debateCurrentStreak;
+    private int debateBestStreak;
+    private long debateLastAt;
 
     // New fields for Gamemode Logic
     private String kingdom;
@@ -105,6 +111,12 @@ public class PlayerData {
         this.playtimeMillis = 0;
         this.lastLoginTime = 0;
         this.lastKnownName = null;
+        this.debateRating = 0;
+        this.debateWins = 0;
+        this.debateLosses = 0;
+        this.debateCurrentStreak = 0;
+        this.debateBestStreak = 0;
+        this.debateLastAt = 0L;
         this.kingdom = null;
         this.hardcoreDead = false;
     }
@@ -498,6 +510,77 @@ public class PlayerData {
         }
         String clean = lastKnownName.trim();
         this.lastKnownName = clean.isEmpty() ? null : clean;
+    }
+
+    public int getDebateRating() {
+        return debateRating;
+    }
+
+    public void setDebateRating(int debateRating) {
+        this.debateRating = Math.max(0, debateRating);
+    }
+
+    public void addDebateRating(int amount) {
+        this.debateRating = Math.max(0, this.debateRating + amount);
+    }
+
+    public int getDebateWins() {
+        return debateWins;
+    }
+
+    public void setDebateWins(int debateWins) {
+        this.debateWins = Math.max(0, debateWins);
+    }
+
+    public void incrementDebateWins() {
+        this.debateWins++;
+    }
+
+    public int getDebateLosses() {
+        return debateLosses;
+    }
+
+    public void setDebateLosses(int debateLosses) {
+        this.debateLosses = Math.max(0, debateLosses);
+    }
+
+    public void incrementDebateLosses() {
+        this.debateLosses++;
+    }
+
+    public int getDebateCurrentStreak() {
+        return debateCurrentStreak;
+    }
+
+    public void setDebateCurrentStreak(int debateCurrentStreak) {
+        this.debateCurrentStreak = Math.max(0, debateCurrentStreak);
+        if (this.debateCurrentStreak > this.debateBestStreak) {
+            this.debateBestStreak = this.debateCurrentStreak;
+        }
+    }
+
+    public void incrementDebateCurrentStreak() {
+        setDebateCurrentStreak(this.debateCurrentStreak + 1);
+    }
+
+    public void resetDebateCurrentStreak() {
+        this.debateCurrentStreak = 0;
+    }
+
+    public int getDebateBestStreak() {
+        return debateBestStreak;
+    }
+
+    public void setDebateBestStreak(int debateBestStreak) {
+        this.debateBestStreak = Math.max(0, debateBestStreak);
+    }
+
+    public long getDebateLastAt() {
+        return debateLastAt;
+    }
+
+    public void setDebateLastAt(long debateLastAt) {
+        this.debateLastAt = Math.max(0L, debateLastAt);
     }
 
     public boolean isNekrotic() { 

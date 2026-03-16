@@ -88,6 +88,12 @@ public class PlayerDataManager {
             data.setSkillPoints(config.getInt("skillpoints", 0));
             data.setXpRemainder(config.getInt("xpRemainder", 0));
             data.setTotalSkillsPurchased(config.getInt("totalSkillsPurchased", 0));
+            data.setDebateRating(config.getInt("debate.rating", 0));
+            data.setDebateWins(config.getInt("debate.wins", 0));
+            data.setDebateLosses(config.getInt("debate.losses", 0));
+            data.setDebateCurrentStreak(config.getInt("debate.currentStreak", 0));
+            data.setDebateBestStreak(config.getInt("debate.bestStreak", data.getDebateCurrentStreak()));
+            data.setDebateLastAt(config.getLong("debate.lastAt", 0L));
 
             // Gamemode Logic
             String gamemodeStr = config.getString("gamemode", "NONE");
@@ -211,6 +217,12 @@ public class PlayerDataManager {
         config.set("skillpoints", data.getSkillPoints());
         config.set("xpRemainder", data.getXpRemainder());
         config.set("totalSkillsPurchased", data.getTotalSkillsPurchased());
+        config.set("debate.rating", data.getDebateRating());
+        config.set("debate.wins", data.getDebateWins());
+        config.set("debate.losses", data.getDebateLosses());
+        config.set("debate.currentStreak", data.getDebateCurrentStreak());
+        config.set("debate.bestStreak", data.getDebateBestStreak());
+        config.set("debate.lastAt", data.getDebateLastAt());
 
         // Save Gamemode
         config.set("gamemode", data.getGamemode().name());
