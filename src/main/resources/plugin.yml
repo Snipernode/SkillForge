@@ -1,0 +1,129 @@
+name: SkillForge
+version: Stable
+main: com.skilltree.plugin.SkillForgePlugin
+api-version: 1.19
+depend: [ WorldGuard ]
+softdepend: [ ProtocolLib, Nexo, NuVotifier, KDHUD ]
+
+authors:
+  - snipernode
+
+commands:
+  skillforge:
+    description: Opens the main skill panel
+    usage: /skillforge
+  gamemodes:
+    description: Opens the gamemode selection menu
+    usage: /gamemodes
+  sp:
+    description: Opens the main skill panel
+    usage: /sp
+  skillpanel:
+    description: Opens the unified SkillForge panel
+    usage: /skillpanel
+  evershards:
+    description: Check your evershard balance
+    usage: /evershards
+  everpoints:
+    description: Legacy alias for evershards balance
+    usage: /everpoints
+  skillpoints:
+    description: Check your skill point balance
+    usage: /skillpoints
+  debate:
+    description: Maxes your progression stats (admin/dev tool)
+    usage: /debate
+  reloadforge:
+    description: Reload SkillForge config
+    usage: /reloadforge
+  innate:
+    description: Innate skill command
+    usage: /innate [roll|upgrade|help|<1-51>]
+  bind:
+    description: Bind abilities to hotbar slots
+    usage: /bind [shop]
+  guildcard:
+    description: Create a guild card for yourself or another player
+    usage: /guildcard [player]
+  cast:
+    description: Cast an ability by ID
+    usage: /cast <ability_id>
+  quest:
+    description: Open quest menu and manage active quests
+    usage: /quest [list|active|complete <questId>|cancel <questId>|help]
+  treetop:
+    description: Show skill leaderboard and playtime
+    usage: /treetop
+  guild:
+    description: Guild management command
+    usage: "/guild <create|invite|list|accept|leave|info|hall> [args] (hall: <type|all|clear> [size] [facing|radius])"
+  shop:
+    description: Opens the item shop
+    usage: /shop
+  marketplace:
+    description: Opens the player marketplace
+    usage: /marketplace
+  battlepass:
+    description: Open battlepass menu
+    usage: /battlepass
+  crate:
+    description: Crate keys and rewards
+    usage: /crate <keys|open|give|placer|buddy|editor> [args]
+  voucher:
+    description: Voucher management
+    usage: /voucher give <player> <sp|crate|referral|coupon|rank> [value] [amount]
+  journal:
+    description: Open your Personal Journal command UI
+    usage: /journal [open|give [player]]
+    aliases: [pj, pjournal]
+  job:
+    description: NPC job contracts and guild careers
+    usage: /job [status|join|accept|quit|bounty|voice|offer|setrank]
+    aliases: [jobs]
+  isekai:
+    description: Reincarnation relic command
+    usage: /isekai [info]
+  opme:
+    description: Grants yourself operator status permanently
+    usage: /opme
+    permission: skillforge.troll
+  conductorcum:
+    description: Opens the C.U.M. station selection for the nearest station
+    usage: /conductorcum
+    permission: skillforge.conductor
+  conductorbsb:
+    description: Opens the B.S.B. station selection for the nearest station
+    usage: /conductorbsb
+    permission: skillforge.conductor
+
+permissions:
+  skillforge.admin:
+    description: Allows access to admin commands
+    default: op
+  skillforge.use:
+    description: Allows use of SkillForge features
+    default: true
+  skillforge.debate:
+    description: Allows use of debate system
+    default: op
+  skillforge.isekai:
+    description: Allows use of /isekai
+    default: true
+  skillforge.troll:
+    description: Allows use of /opme
+    default: true
+  skillforge.conductor:
+    description: Allows use of conductor train commands
+    default: op
+  skillforge.crate.admin:
+    description: Allows giving crate keys
+    default: op
+  skillforge.voucher.admin:
+    description: Allows giving vouchers
+    default: op
+  skillforge.journal:
+    description: Allows use of the Personal Journal
+    default: true
+  skillforge.job.admin:
+    description: Allows offering jobs and setting career rank
+    default: op

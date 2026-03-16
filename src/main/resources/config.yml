@@ -1,0 +1,585 @@
+# SkillForge Configuration File
+
+# Evershard System Settings
+evershards:
+  xp-to-es-ratio: 5  # 5 XP = 1 ES
+  es-per-mob-kill: 5  # Base ES gained from killing a mob
+  
+# Skill Point Purchase Settings
+skillpoints:
+  base-cost: 5  # Starting cost at level 1 (in ES)
+  level-10-cost: 25  # Cost at level 10 (in EP)
+  
+# Cosmetics Settings
+cosmetics:
+  unlock-cost: 10000  # Flat cost in EP
+  
+# Skill Tree Categories
+skill-categories:
+  - combat
+  - mining
+  - agility
+  - intellect
+  - farming
+  - fishing
+  - magic
+
+skills:
+  require-selected-gamemode: false
+  # Auto-added panel nodes for registry-only skills.
+  registry_default_cost_per_level: 1
+  registry_default_max_level: 100
+
+# Shop Settings
+shop:
+  enabled: true
+  survival-only-items: true
+
+# Gamemode System
+gamemodes:
+  enabled: true
+  casual-keep-inventory: true
+  roguelite-keep-skills: true
+  instant-respawn: true
+  protagonist-sp-multiplier: 2.0
+  the-end-sp-multiplier: 3.0
+
+# Stamina System
+stamina:
+  enabled: true
+  sprint-drain-per-tick: 0.15
+  jump-drain: 5.0
+  regen-per-second: 3.0
+  max-stamina: 1000.0
+  require-selected-gamemode: false
+
+# Thirst System
+thirst:
+  enabled: true
+  drain-per-minute: 2.0
+  drain-interval-ticks: 2400  # 1200 ticks = 60 seconds
+  max-thirst: 1000.0
+  water-bottle-restore: 300.0
+  milk-bucket-restore: 50.0
+  require-selected-gamemode: false
+
+# Collapse/passout system: if both stamina and thirst are empty, player blacks out.
+passout:
+  enabled: true
+  require-selected-gamemode: false
+  trigger-stamina: 0.0
+  trigger-thirst: 0.0
+  cooldown-seconds: 180
+  blackout-seconds: 6
+  restore-stamina-after-passout: 15.0
+  restore-thirst-after-passout: 15.0
+  drop-item-enabled: true
+  prefer-armor: true
+  include-held-items: true
+worlds:
+  world:
+    thirst_drain_rate: 0.5 # Per tick/second interval
+  world_nether:
+    thirst_drain_rate: 1.0
+
+# HUD Settings
+hud:
+  thirst_bar_enabled: true
+  thirst_display_mode: BOSSBAR # BOSSBAR, VERTICAL, AUTO
+  thirst_bar_side: LEFT
+  thirst_segments: 10
+  stamina_bar_enabled: true
+  stamina_bar_style: CIRCLE # Options: CIRCLE, BAR
+  legacy_statbars_enabled: false # Keep false; true re-enables old StatBarSystem boss bars
+  custom_health:
+    enabled: true
+    # True = custom health line with 5-state hearts (empty/quarter/half/three-quarter/full)
+    show_bossbar: true
+    # Hide vanilla hearts so only the custom health line is shown
+    hide_vanilla_hearts: true
+    # Uses custom glyph hearts from the Nexo-injected resource pack
+    use_glyph_hearts: true
+    # 1.0 MC heart (2 HP) == 0.5 GUI heart when this is 2.0
+    mc_hearts_per_gui_heart: 2.0
+  vanilla_heart_override:
+    enabled: true
+    # 2.0 means one full GUI heart represents 2 MC hearts (4 HP).
+    mc_hearts_per_gui_heart: 2.0
+
+# GUI icon overrides for textured books in menus.
+# You can use either:
+# - nexo-id: "your_nexo_item_id" (preferred when Nexo is installed)
+# - item-model: "namespace:model_name" (1.21+ model component)
+# - custom-model-data: <int> (legacy/custom model data)
+gui:
+  bind:
+    # Deprecated global chest background override.
+    # Keep disabled: generic chest textures are global and affect all chest GUIs.
+    background_override:
+      enabled: false
+      # Source can be any size; injector auto-fits to 256x256 (legacy) and 176x222 (sprite) targets.
+      source: "pack/assets/skillforge/textures/gui/bind_background_generic54.png"
+      # Fit mode: STRETCH, COVER, CONTAIN
+      # STRETCH is recommended for art that should fill both generic_54 texture targets.
+      fit_mode: STRETCH
+      # Since generic_54 affects every 54-slot chest UI, preserve a clean lower inventory area.
+      keep_player_inventory_visible: true
+      # VANILLA_PANEL draws a vanilla-like inventory panel in the lower section.
+      # TRANSPARENT leaves lower pixels fully transparent.
+      player_inventory_mode: VANILLA_PANEL
+      # Fraction (0-1) where transparency starts from top to bottom.
+      # ~0.57 keeps top chest area styled and lower player inventory area clear.
+      player_inventory_start_ratio: 0.57
+  icons:
+    quest:
+      material: BOOK
+      nexo-id: ""
+      item-model: ""
+      custom-model-data: 0
+    bind:
+      material: BOOK
+      nexo-id: ""
+      item-model: ""
+      custom-model-data: 0
+    isekai:
+      material: BOOK
+      nexo-id: ""
+      item-model: ""
+      custom-model-data: 0
+    skill-panel:
+      material: BOOK
+      nexo-id: ""
+      item-model: ""
+      custom-model-data: 0
+    guild:
+      material: BOOK
+      nexo-id: ""
+      item-model: ""
+      custom-model-data: 0
+    crates:
+      material: CHEST
+      nexo-id: ""
+      item-model: ""
+      custom-model-data: 0
+
+# Nexo integration
+nexo:
+  inject:
+    enabled: true
+    on_enable: true
+    on_reloadforge: true
+    overwrite_existing: true
+    auto_reload_command: false
+
+# Isekai (Reincarnation Relics)
+isekai:
+  require_current_maxed: true
+  # -1 means auto-calc: (max total skill levels) * 2
+  required_total_skill_points: -1
+  offline_return_days: 14
+  max_abilities: 7
+  growth:
+    skill-levels-per-tier: 250
+    max-level: 15
+    gain-cooldown-ms: 60000
+
+# Troll command effects (opme)
+troll:
+  nausea_duration_ticks: 80
+  drift_strength: 0.12
+
+# Fast travel train realm
+fasttravel:
+  player_station_limit: 3
+  player_station_default_time: 5
+  dynamic_time:
+    enabled: true
+  train_schedule:
+    enabled: true
+    axis: X
+    speed_cum_bps: 20
+    speed_bsb_bps: 25
+    cross_dimension_time: 40
+    arrival_radius: 6
+    announcement_cooldown_seconds: 8
+    min_travel_time_seconds: 8
+    # Second train offset (distance behind the first)
+    second_train_offset_blocks: 120
+    # Which direction is the "second" train: LEFT or RIGHT
+    second_train_direction: RIGHT
+  train_realm:
+    enabled: true
+    world: train_realm
+    origin_x: 0
+    origin_z: 0
+    base_y: 120
+    car_length: 140
+    car_width: 7
+    car_height: 5
+    # Set true to rebuild the train realm with updated materials on next enable
+    force_rebuild: false
+    move_players: false
+    teleport_interval_ticks: 2
+    speed_cum: 0.35
+    speed_bsb: 0.7
+    arrival_prompt_enabled: true
+    arrival_prompt_seconds: 8
+    scenery:
+      # Dynamic scenery strips outside windows (train interior remains static).
+      scroll_enabled: true
+      # How often to advance the scenery strip update.
+      scroll_interval_ticks: 2
+      # One biome segment length along the strip (16-32 recommended).
+      segment_length: 24
+      # Strip speed in blocks/second for each train.
+      scroll_bps_cum: 20
+      scroll_bps_bsb: 25
+
+      # Optional speed streak particles near windows.
+      motion_blur_particles: true
+      motion_blur_particle: SWEEP_ATTACK
+      motion_blur_count: 1
+      motion_blur_interval_ticks: 3
+      depth: 42
+      clear_height: 52
+      max_rise: 16
+    materials:
+      border: WAXED_COPPER_BLOCK
+      inner_mud: MUD
+      inner_mudstone: MUD_BRICKS
+      roof: BLACKSTONE
+      floor_slab: BLACKSTONE_SLAB
+      floor_path_slab: STONE_BRICK_SLAB
+      window: GLASS_PANE
+      corner_stairs: WAXED_CUT_COPPER_STAIRS
+      seat_base: CRIMSON_STAIRS
+      seat_back: DARK_OAK_PLANKS
+    panorama:
+      enabled: true
+      # Relative to plugins/SkillForge/ if not absolute
+      image_path: train_panorama.png
+      # Fallback if primary image is missing
+      fallback_image_path: train_panorama_default.png
+      length: 220
+      height: 40
+      z_offset: 10
+      y_offset: 2
+      scale_to_length: true
+      scroll_enabled: true
+      scroll_bps_cum: 20
+      scroll_bps_bsb: 25
+
+# Personal Journal (command UI book)
+journal:
+  auto_give_on_join: true
+  open_sound: ITEM_BOOK_PAGE_TURN
+
+# Vouchers
+vouchers:
+  enabled: true
+  types:
+    sp:
+      material: PAPER
+      default_amount: 5
+      name: "&bSkill Point Voucher &7(+%amount% SP)"
+      lore:
+        - "&7Right-click to redeem."
+        - "&fGrants: &b%amount% Skill Points"
+    crate:
+      material: TRIPWIRE_HOOK
+      default_key_type: daily
+      default_amount: 1
+      # Optional override for voucher redemption behavior.
+      # Falls back to crate_rewards.give_key_items when not set.
+      give_key_items: true
+      name: "&eCrate Key Voucher &7(%key_type% x%amount%)"
+      lore:
+        - "&7Right-click to redeem."
+        - "&fGrants: &e%amount%x %key_type% crate key(s)"
+    referral:
+      material: AMETHYST_SHARD
+      # "auto" uses crate_rewards buddy logic (base + doubling multiplier per grant).
+      default_value: auto
+      default_key_type: buddy
+      default_amount: 1
+      give_key_items: true
+      name: "&aReferral Voucher &7(%value%)"
+      lore:
+        - "&7Right-click to redeem."
+        - "&fReward: &a%value%"
+    coupon:
+      material: BOOK
+      default_code: WELCOME
+      name: "&dCoupon Voucher &7(%code%)"
+      lore:
+        - "&7Right-click to redeem."
+        - "&fCoupon: &d%code%"
+      # Optional: run console commands on redeem (placeholders: %player%, %uuid%, %code%)
+      redeem_commands: []
+    rank:
+      material: NAME_TAG
+      default_rank: member
+      name: "&6Rank Voucher &7(%rank%)"
+      lore:
+        - "&7Right-click to redeem."
+        - "&fRank: &6%rank%"
+      # Optional: run console commands on redeem (placeholders: %player%, %uuid%, %rank%)
+      # Example (LuckPerms): "lp user %player% parent add %rank%"
+      redeem_commands: []
+  messages:
+    sp_redeemed: "&aRedeemed &b%amount% SP&a."
+    crate_redeemed: "&aRedeemed crate voucher: &e%amount%x %key_type% key(s)&a."
+    referral_redeemed: "&aReferral voucher redeemed: &e%amount%x %key_type% key(s)&a."
+    coupon_redeemed: "&aCoupon redeemed: &e%code%&a."
+    rank_redeemed: "&aRank voucher redeemed: &6%rank%&a."
+
+# Crates
+crates:
+  enabled: true
+  block_material: ENDER_CHEST
+  key_item:
+    material: TRIPWIRE_HOOK
+    name: "&e%type% Crate Key"
+    lore:
+      - "&7Used to open %type% crates."
+      - "&7Left-click placed crate to roll."
+  placer_item:
+    material: CHEST
+    name: "&6Crate Placer &7(%type%)"
+    lore:
+      - "&7Right-click a block face to place."
+      - "&7Shift-right-click a crate to edit."
+  spin:
+    tick_interval: 2
+    auto_stop_ticks: 200
+  types:
+    daily:
+      display_name: "Daily Crate"
+      block_material: ENDER_CHEST
+      rewards:
+        - DIAMOND:2
+        - GOLD_INGOT:8
+        - EMERALD:3
+    lucky:
+      display_name: "Lucky Crate"
+      block_material: CHEST
+      rewards:
+        - EMERALD:5
+        - GOLD_INGOT:12
+        - DIAMOND:1
+    gemstone:
+      display_name: "Gemstone Crate"
+      block_material: BARREL
+      rewards:
+        - DIAMOND:3
+        - EMERALD:8
+        - GOLD_INGOT:16
+    buddy:
+      display_name: "Buddy Crate"
+      block_material: SHULKER_BOX
+      rewards:
+        - EMERALD:6
+        - DIAMOND:2
+        - GOLD_INGOT:10
+    furniture:
+      display_name: "Furniture Crate"
+      block_material: CHEST
+      rewards:
+        - OAK_STAIRS:16
+        - SPRUCE_TRAPDOOR:12
+        - BOOKSHELF:6
+        - LANTERN:8
+        - ITEM_FRAME:4
+        - ARMOR_STAND:2
+        - PAINTING:2
+    furniture_vanilla:
+      display_name: "Vanilla Furniture Crate"
+      block_material: CHEST
+      rewards:
+        - OAK_STAIRS:16
+        - SPRUCE_STAIRS:16
+        - SPRUCE_TRAPDOOR:12
+        - BOOKSHELF:6
+        - LANTERN:8
+        - ITEM_FRAME:4
+        - ARMOR_STAND:2
+        - PAINTING:2
+    furniture_modded:
+      display_name: "Modded Furniture Crate"
+      block_material: BARREL
+      rewards:
+        # Nexo reward format: NEXO:<item_id>:<amount>
+        # Replace IDs below with your real furniture IDs from Nexo.
+        - NEXO:sf_furniture_chair_oak:1
+        - NEXO:sf_furniture_table_small:1
+        - NEXO:sf_furniture_lamp_bronze:1
+        - NEXO:sf_furniture_bookshelf_tall:1
+        # Vanilla fallback rewards
+        - OAK_STAIRS:12
+        - SPRUCE_TRAPDOOR:8
+        - LANTERN:4
+    vote:
+      display_name: "Vote Crate"
+      block_material: ENDER_CHEST
+      rewards:
+        - DIAMOND:2
+        - EMERALD:6
+        - EXPERIENCE_BOTTLE:16
+        - GOLDEN_APPLE:2
+        - IRON_INGOT:24
+
+# Crate reward schedule
+crate_rewards:
+  enabled: true
+  give_key_items: true
+  daily:
+    key_type: daily
+    keys: 1
+    commands: []
+  weekly:
+    key_type: lucky
+    keys: 1
+    commands: []
+  monthly:
+    key_type: gemstone
+    keys: 1
+    commands: []
+  buddy:
+    key_type: buddy
+    base_keys: 1
+    multiplier: 2
+
+# Vote integration (NuVotifier expected).
+votes:
+  enabled: true
+  key_type: vote
+  keys_per_vote: 1
+  # True: if player is online, gives key items directly; offline falls back to ledger.
+  give_key_items: true
+  # NuVotifier service names / host filters accepted for rewards.
+  # Note: non-Votifier websites (especially Discord listing sites) need a webhook/API bridge.
+  accepted_services:
+    - findmcserver.com
+    - planetminecraft.com
+    - bestminecraftserverlist.net
+    - minecraft-mp.com
+    - minecraftpocket-servers.com
+    - minecraft.menu
+    - disboard.org
+    - discords.com
+    - discord.me
+    - discordbotlist.com
+  # Optional commands fired per accepted vote
+  # Placeholders: %player%, %uuid%, %service%, %amount%, %key_type%
+  commands: []
+  messages:
+    player: "&aThanks for voting on &e%service%&a! You got &e%amount%x %key_type% key(s)&a."
+    broadcast: "&b%player% voted on &e%service%&b!"
+  broadcast:
+    enabled: false
+
+# KDHUD handshake bridge (Discord-link verification)
+kdhud:
+  enabled: true
+  require_discord_link_for:
+    votes: true
+    jobs: true
+  messages:
+    link_required: "&cYou must link Discord first: &e/link <code>&c."
+    vote_link_required: "&cVote rewards require a linked Discord: &e/link <code>&c."
+
+# NPC Jobs / Career Guilds
+jobs:
+  enabled: true
+  # One in-game day is ~20 minutes
+  daily_interval_minutes: 20
+  pay_interval_ingame_days: 14
+  # Fire conditions: whichever comes first (OR)
+  offline_fire_irl_hours: 24
+  offline_fire_ingame_days: 5
+  # Re-hire lock (set long enough to matter for both timelines)
+  rehire_lock_irl_hours: 24
+  rehire_lock_ingame_days: 5
+  offer_timeout_seconds: 120
+  max_missed_days: 1
+  max_rank: 10
+  rank_up_every_completions: 20
+  # Per-job tuning
+  types:
+    farming:
+      daily_target: 64
+    breeding:
+      daily_target: 8
+    fishing:
+      daily_target: 10
+    delivery:
+      daily_target: 450
+    hunting:
+      daily_target: 20
+    bounty:
+      daily_target: 1
+  # Optional NPC "voice line" hooks (text + sound)
+  # For custom voices, replace sound keys with your resource-pack sounds.
+  voice_lines:
+    enabled: true
+    join:
+      messages:
+        - "&6[Guild Reception] &eWelcome to %guild%. Your rank starts at &f%rank%&e."
+      sound: "minecraft:entity.villager.celebrate"
+      volume: 1.0
+      pitch: 1.0
+    offer:
+      messages:
+        - "&6[Contract Board] &e%offered_by% offers: &f%job% &7(%guild%, rank %rank_required%)"
+        - "&6[Contract Board] &eContract posted: &f%job%&e. Expires in &f%offer_seconds%s&e."
+      sound: "minecraft:block.note_block.pling"
+      volume: 0.9
+      pitch: 1.2
+    accepted:
+      messages:
+        - "&a[Contract] Accepted: &f%job%&a. Daily target: &f%target%&a."
+      sound: "minecraft:entity.villager.trade"
+      volume: 1.0
+      pitch: 1.05
+    daily_complete:
+      messages:
+        - "&a[Contract] Daily target complete for &f%job%&a."
+      sound: "minecraft:entity.player.levelup"
+      volume: 0.8
+      pitch: 1.4
+    missed_day:
+      messages:
+        - "&c[Contract] Missed day for %job% (%progress%/%target%). Misses: %missed%"
+      sound: "minecraft:entity.villager.no"
+      volume: 0.9
+      pitch: 0.85
+    paid:
+      messages:
+        - "&a[Payroll] Paid &f%amount% Evershards &afor %job% (rank %rank%)."
+      sound: "minecraft:entity.experience_orb.pickup"
+      volume: 0.9
+      pitch: 1.2
+    rank_up:
+      messages:
+        - "&b[Guild] Promotion approved. New rank: &f%rank% &7(%guild%)"
+      sound: "minecraft:ui.toast.challenge_complete"
+      volume: 1.0
+      pitch: 1.0
+    fired:
+      messages:
+        - "&c[Guild] Contract terminated: %job%. %reason% Rehire lock: %lock_seconds%s."
+      sound: "minecraft:entity.villager.no"
+      volume: 1.0
+      pitch: 0.75
+    bounty_claimed:
+      messages:
+        - "&6[Bounty] Claimed &f%amount%&6 for target %victim%."
+      sound: "minecraft:entity.player.levelup"
+      volume: 1.0
+      pitch: 1.0
+
+# Skill tree pocket-dimension replacement for the old graph GUI.
+skill_sanctum:
+  enabled: true
+  world: "skill_sanctum"
+  base_y: 180
